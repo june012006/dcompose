@@ -1,0 +1,30 @@
+services:
+  cloudbeaver:
+      image: dbeaver/cloudbeaver:${APP_VERSION}
+      container_name: beaver
+      restart: always
+      #ports:
+      # - '$APP_HTTP_PORT:8978'
+      volumes: 
+       - cloudbeaver:/opt/cloudbeaver/workspace     
+      networks:
+        - proxy      
+      labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.beaver.entrypoints=web"
+      - "traefik.http.routers.beaver.rule=Host(`beaver.watermelononatoothpick.com`)"
+      - "traefik.http.middlewares.beaver-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.beaver.middlewares=beaver-https-redirect"
+      - "traefik.http.routers.beaver-secure.entrypoints=websecure"
+      - "traefik.http.routers.beaver-secure.rule=Host(`beaver.watermelononatoothpick.com`)"
+      - "traefik.http.routers.beaver-secure.tls=true"
+      - "traefik.http.routers.beaver-secure.service=beaver"
+      - "traefik.http.services.beaver.loadbalancer.server.port=8978"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  cloudbeaver:
