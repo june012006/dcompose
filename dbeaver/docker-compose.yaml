@@ -8,7 +8,8 @@ services:
       volumes: 
        - cloudbeaver:/opt/cloudbeaver/workspace     
       networks:
-        - proxy      
+        - proxy  
+        - db_backend    
       labels:
       - "traefik.enable=true"
       - "traefik.http.routers.beaver.entrypoints=web"
@@ -24,6 +25,8 @@ services:
 
 networks:
   proxy:
+    external: true
+  db_backend:
     external: true
 
 volumes:
