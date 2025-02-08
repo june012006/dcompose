@@ -32,7 +32,6 @@ services:
       timeout: 5s
       retries: 10
     networks:
-      openbao:
       db_backend:
     volumes:
       - pg_data:/var/lib/postgresql/data
@@ -74,5 +73,5 @@ services:
       - ./bao.conf:/openbao/config/bao.conf
       - openbao:/openbao
     networks:
-      openbao:
+      db_backend:
       proxy:
