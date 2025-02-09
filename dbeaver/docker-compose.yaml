@@ -13,11 +13,11 @@ services:
       labels:
       - "traefik.enable=true"
       - "traefik.http.routers.beaver.entrypoints=web"
-      - "traefik.http.routers.beaver.rule=Host(`beaver.watermelononatoothpick.com`)"
+      - "traefik.http.routers.beaver.rule=Host(`${DBEAVER_FQDN}`)"
       - "traefik.http.middlewares.beaver-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.beaver.middlewares=beaver-https-redirect"
       - "traefik.http.routers.beaver-secure.entrypoints=websecure"
-      - "traefik.http.routers.beaver-secure.rule=Host(`beaver.watermelononatoothpick.com`)"
+      - "traefik.http.routers.beaver-secure.rule=Host(`${DBEAVER_FQDN}`)"
       - "traefik.http.routers.beaver-secure.tls=true"
       - "traefik.http.routers.beaver-secure.service=beaver"
       - "traefik.http.services.beaver.loadbalancer.server.port=8978"

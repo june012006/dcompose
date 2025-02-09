@@ -50,7 +50,7 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.authentik.rule=Host(`auth.watermelononatoothpick.com`) || HostRegexp(`{subdomain:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?}.watermelononatoothpick.com`) && PathPrefix(`/outpost.goauthentik.io/`)
+      - traefik.http.routers.authentik.rule=Host(`auth.${FQDN}`) || HostRegexp(`{subdomain:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?}.${FQDN}`) && PathPrefix(`/outpost.goauthentik.io/`)
       - traefik.http.routers.authentik.tls.certresolver=letsencrypt
       - traefik.http.services.authentik.loadbalancer.server.port=9000
       - traefik.docker.network=proxy
