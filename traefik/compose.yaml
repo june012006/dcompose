@@ -2,7 +2,7 @@
 version: "3"
 services:
   traefik:
-    image: traefik:3.1.0
+    image: traefik:3.3.3
     container_name: traefik
     restart: unless-stopped
     networks:
@@ -13,10 +13,11 @@ services:
       - --providers.docker=true
       - --providers.docker.exposedByDefault=false
       - --providers.docker.endpoint=tcp://socketproxy-traefik:2375
+      - --providers.docker.network=proxy
       - --providers.file.directory=/traefik-configs
       - --providers.redis.endpoints=redis:6379
       # Enable the Trafik dashboard
-      - --api.dashboard=true
+      - --api=true
       # Set up LetsEncrypt
       - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
@@ -38,6 +39,7 @@ services:
       - --entrypoints.websecure.transport.respondingTimeouts.readTimeout=0s
       # Set up logging
       - --log.level=DEBUG
+      - --accesslog=true
       # - --accesslog.filePath=/logs/access.log
       # - --log.filePath=/logs/traefik.log
       # - --serversTransport.insecureSkipVerify=true
@@ -69,7 +71,11 @@ services:
       - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.enabled=true"
       - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.crowdseclapikey=${crowdseclapikey}"   
       - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.forwardedheaderstrustedips=10.1.10.1,172.23.0.0/24"
-      - "traefik.http.middlewares.adminBasicAuth.users=${ADMINBASIC}"
+      - "traefik.http.middlewares.adminBasicAuth.basicauth.users=${ADMINBASIC}"
+    depends_on:
+      - proxydmz-socketproxy
+      - redis
+      - crowdsec
   redis:
     image: docker.io/library/redis:alpine
     command: --save 60 1 --loglevel warning
@@ -97,7 +103,7 @@ services:
     ports:
       - 2375:2375
     volumes:
-      - /var/run/docker.socket:/var/run/docker.socket:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - LOG_LEVEL=notice # debug,info,notice,warning,err,crit,alert,emerg (default=info)
       ## Variables match the URL prefix (i.e. AUTH blocks access to /auth/* parts of the API, etc.).
