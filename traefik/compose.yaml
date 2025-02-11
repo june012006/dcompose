@@ -1,0 +1,162 @@
+---
+version: "3"
+services:
+  traefik:
+    image: traefik:3.1.0
+    container_name: traefik
+    restart: unless-stopped
+    networks:
+      - proxy
+      - backend
+    command:
+      # Tell Traefik to discover containers using the Docker API
+      - --providers.docker=true
+      - --providers.docker.exposedByDefault=false
+      - --providers.docker.endpoint=tcp://socketproxy-traefik:2375
+      - --providers.file.directory=/traefik-configs
+      - --providers.redis.endpoints=redis:6379
+      # Enable the Trafik dashboard
+      - --api.dashboard=true
+      # Set up LetsEncrypt
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.letsencrypt.acme.email=${CLOUDFLARE_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      # Set up an insecure listener that redirects all traffic to TLS
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.forwardedHeaders.trustedIPs=127.0.0.1/32,10.0.0.0/8,192.168.0.0/16,172.16.0.0/12,173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/12,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32
+      - --entrypoints.websecure.proxyProtocol.trustedIPs=127.0.0.1/32,10.1.10.0/24,192.168.0.0/16,172.16.0.0/12,173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/12,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32
+      # Set up the TLS configuration for our websecure listener
+      - --entrypoints.websecure.http.tls=true
+      - --entrypoints.websecure.http.tls.certResolver=letsencrypt
+      - --entrypoints.websecure.http.tls.domains[0].main=${FQDN}
+      - --entrypoints.websecure.http.tls.domains[0].sans=*.${FQDN}
+      # Timeouts for webhooks and immich
+      - --entrypoints.websecure.transport.respondingTimeouts.readTimeout=0s
+      # Set up logging
+      - --log.level=DEBUG
+      # - --accesslog.filePath=/logs/access.log
+      # - --log.filePath=/logs/traefik.log
+      # - --serversTransport.insecureSkipVerify=true
+      #crowdsec plugin
+      - --experimental.plugins.crowdsec-bouncer.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+      - --experimental.plugins.crowdsec-bouncer.version=v1.2.1
+    environment:
+      - CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
+      - CLOUDFLARE_DNS_API_TOKEN=${CLOUDFLARE_API}
+
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      # - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/letsencrypt
+      # - /var/log/traefik:/logs
+      - traefik-configs:/traefik-configs
+    labels:
+      - "traefik.enable=true"
+      - 'traefik.http.routers.traefik.rule=Host(`${TRAEFIK_FQDN}`)'
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - 'traefik.http.routers.traefik.middlewares=strip'
+      - 'traefik.http.routers.traefik.middlewares=adminBasicAuth'
+      # Global middlewares
+      - 'traefik.http.middlewares.strip.stripprefix.prefixes=/traefik'
+      - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.enabled=true"
+      - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.crowdseclapikey=${crowdseclapikey}"   
+      - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.forwardedheaderstrustedips=10.1.10.1,172.23.0.0/24"
+      - "traefik.http.middlewares.adminBasicAuth.users=${ADMINBASIC}"
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    networks: 
+      - backend
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - redis:/data
+  proxydmz-socketproxy:
+    container_name: socketproxy-traefik
+    image: lscr.io/linuxserver/socket-proxy:${socketproxyversion}
+    read_only: true
+    tmpfs:
+      - /run
+    networks:
+      - backend
+    ports:
+      - 2375:2375
+    volumes:
+      - /var/run/docker.socket:/var/run/docker.socket:ro
+    environment:
+      - LOG_LEVEL=notice # debug,info,notice,warning,err,crit,alert,emerg (default=info)
+      ## Variables match the URL prefix (i.e. AUTH blocks access to /auth/* parts of the API, etc.).
+      # 0 to revoke access.
+      # 1 to grant access.
+      ## Granted by Default
+      - EVENTS=1
+      - PING=1
+      - VERSION=1
+      ## Revoked by Default
+      # Security critical
+      - AUTH=0
+      - SECRETS=0
+      - POST=0 # Watchtower
+      # Not always needed
+      - BUILD=0
+      - COMMIT=0
+      - CONFIGS=0
+      - ALLOW_START=0
+      - ALLOW_STOP=0
+      - ALLOW_RESTARTS=0
+      - CONTAINERS=1 # Traefik, portainer, netdata etc.
+      - DISTRIBUTION=0
+      - EXEC=0
+      - IMAGES=0 # Portainer
+      - INFO=1 # Portainer
+      - NETWORKS=0 # Portainer
+      - NODES=0
+      - PLUGINS=0
+      - SERVICES=1 # Portainer
+      - SESSION=0
+      - SWARM=0
+      - SYSTEM=1
+      - TASKS=0 # Portainer
+      - VOLUMES=0 # Portainer
+  crowdsec:
+    image: crowdsecurity/crowdsec
+    container_name: crowdsec
+    environment:
+      PGID: "1000"
+      DOCKER_HOST: tcp://socketproxy-traefik:2375
+      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/home-assistant crowdsecurity/http-cve crowdsecurity/whitelist-good-actors crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/appsec-crs"
+      TZ: America/Chicago
+      CUSTOM_HOSTNAME: CrowdSecDMZ
+    expose: 
+      - "8080"
+    networks:
+      - backend
+    volumes:
+      - crowdsec-data:/var/lib/crowdsec/data
+      - crowdsec-config:/etc/crowdsec
+volumes:
+  certs:
+  traefik-configs:
+  redis:
+  crowdsec-data:
+  crowdsec-config:
+
+networks:
+  proxy:
+    external: true
+  backend:
