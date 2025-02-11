@@ -1,3 +1,4 @@
+services:
   proxydmz-socketproxy:
     container_name: socketproxy-main
     image: lscr.io/linuxserver/socket-proxy:${socketproxyversion}
