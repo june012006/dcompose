@@ -1,5 +1,5 @@
 services:
-  proxydmz-socketproxy:
+  socketproxy-main:
     container_name: socketproxy-main
     image: lscr.io/linuxserver/socket-proxy:${socketproxyversion}
     read_only: true
@@ -46,6 +46,6 @@ services:
       - SYSTEM=1
       - TASKS=0 # Portainer
       - VOLUMES=0 # Portainer
-  networks:
-    socketproxy:
-      external: true
+networks:
+  socketproxy:
+    external: true
