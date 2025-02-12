@@ -7,6 +7,18 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uptime.entrypoints=web"
+      - "traefik.http.routers.<app name>.rule=Host(`${<APPNAME>_FQDN}`)"
+      - "traefik.http.middlewares.uptime-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.<app name>.middlewares=<app name>-https-redirect"
+      - "traefik.http.routers.<app name>-secure.entrypoints=websecure"
+      - "traefik.http.routers.<app name>-secure.rule=Host(`<APPNAME>_FQDN`)"
+      - "traefik.http.routers.<app name>-secure.tls=true"
+      - "traefik.http.routers.<app name>-secure.service=<app name>"
+      - "traefik.http.services.<app name>.loadbalancer.server.port=8443"
+      - "traefik.docker.network=proxy"
     volumes:
       - ./uptime-kuma-data:/app/data
     ports:
