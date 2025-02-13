@@ -14,7 +14,7 @@ services:
       - "traefik.http.middlewares.uptime-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.uptime.middlewares=uptime-https-redirect"
       - "traefik.http.routers.uptime-secure.entrypoints=websecure"
-      - "traefik.http.routers.uptime-secure.rule=Host(`uptime.${FQDN`)"
+      - "traefik.http.routers.uptime-secure.rule=Host(`uptime.${FQDN}`)"
       - "traefik.http.routers.uptime-secure.tls=true"
       - "traefik.http.routers.uptime-secure.service=uptime"
       - "traefik.http.services.uptime.loadbalancer.server.port=8443"
