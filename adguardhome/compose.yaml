@@ -39,6 +39,7 @@ services:
       #autokuma
       - "kuma.Infrastructure.group.name=Infrastructure"
       - "kuma.${APPNAME}.docker.name=${APPNAME}"
+      - "kuma.${APPNAME}.docker.container_name=adguardhome"
       - "kuma.${APPNAME}.docker.parent_name=Infrastructure"
       #- "kuma.${APPNAME}.docker.notification_names=ntfy"
     volumes:
