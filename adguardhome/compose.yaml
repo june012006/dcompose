@@ -37,7 +37,7 @@ services:
       - "homepage.widget.password=${ADGUARD_PW}"
     volumes:
       - adguard-work:/opt/adguardhome/work
-      - ./confdir:/opt/adguardhome/conf
+      - ./configdir:/opt/adguardhome/conf
     restart: unless-stopped
 volumes:
   adguard-work:
