@@ -29,11 +29,11 @@ services:
       - "kop.bind.ip=${APPIP}"
       - "homepage.group=Infrastructure"
       - "homepage.name=${APPNAME}"
-      - "homepage.icon=adguard.png"
+      - "homepage.icon=adguard-home.png"
       - "homepage.href=https://${APPNAME}.${FQDN}/"
       - "homepage.description=${APPDESC}"
       - "homepage.widget.type=adguard"
-      - "homepage.widget.url=http://${APPIP}"
+      - "homepage.widget.url=https://${APPNAME}.${FQDN}"
       - "homepage.widget.username=${ADGUARD_UN}"
       - "homepage.widget.password=${ADGUARD_PW}"
     volumes:
