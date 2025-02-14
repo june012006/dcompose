@@ -114,6 +114,15 @@ services:
       CUSTOM_HOSTNAME: CrowdSecDMZ
     expose: 
       - "8080"
+    labels:
+      - "homepage.group=Infrastructure"
+      - "homepage.name=Crowdsec"
+      - "homepage.icon=crowdsec.png"
+      - "homepage.description=Crowdsourced IP banning"
+      - "homepage.widget.type=crowdsec"
+      - "homepage.widget.url=http://crowdsec:8080"
+      - "homepage.widget.username=${CROWDSEC_UN}"
+      - "homepage.widget.password=${CROWDSEC_PW}"
     networks:
       - backend
     volumes:
