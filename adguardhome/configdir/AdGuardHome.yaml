@@ -146,6 +146,7 @@ user_rules:
   - '|vault.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
   - '|beaver.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
   - '|openbao.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
+  - '|uptime.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
 dhcp:
   enabled: false
   interface_name: ""
