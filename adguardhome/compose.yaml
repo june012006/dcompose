@@ -36,6 +36,9 @@ services:
       - "homepage.widget.url=https://${APPNAME}.${FQDN}"
       - "homepage.widget.username=${ADGUARD_UN}"
       - "homepage.widget.password=${ADGUARD_PW}"
+      #autokuma
+      - "kuma.${APPNAME}.docker.name=${APPNAME}"
+      - "kuma.${APPNAME}.docker.parent_name=Infrastructure"
     volumes:
       - adguard-work:/opt/adguardhome/work
       - ./configdir:/opt/adguardhome/conf
