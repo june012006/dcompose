@@ -124,7 +124,7 @@ services:
       - "homepage.widget.username=${CROWDSEC_UN}"
       - "homepage.widget.password=${CROWDSEC_PW}"
     networks:
-      - socketproxy
+      - proxy
     volumes:
       - crowdsec-data:/var/lib/crowdsec/data
       - crowdsec-config:/etc/crowdsec
