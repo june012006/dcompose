@@ -8,11 +8,12 @@ services:
     networks:
       - proxy
       - backend
+      - socketproxy
     command:
       # Tell Traefik to discover containers using the Docker API
       - --providers.docker=true
       - --providers.docker.exposedByDefault=false
-      - --providers.docker.endpoint=tcp://socketproxy-traefik:2375
+      - --providers.docker.endpoint=tcp://socketproxy-main:2375
       - --providers.docker.network=proxy
       - --providers.file.directory=/traefik-configs
       - --providers.redis.endpoints=redis:6379
@@ -166,3 +167,5 @@ networks:
   proxy:
     external: true
   backend:
+  socketproxy:
+    external: true
