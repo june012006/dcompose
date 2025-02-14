@@ -9,7 +9,7 @@ services:
       - "BIND_IP=192.168.25.4"
       - "DOCKER_HOST=tcp://socketproxy-main:2375"
     networks:
-      - traefik_backend
+      - socketproxy
 networks:
   socketproxy:
     external: true
