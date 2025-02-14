@@ -40,4 +40,4 @@ services:
       - ./confdir:/opt/adguardhome/conf
     restart: unless-stopped
 volumes:
-  adguard-work
+  adguard-work:
