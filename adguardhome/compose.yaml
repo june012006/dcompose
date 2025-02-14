@@ -37,8 +37,10 @@ services:
       - "homepage.widget.username=${ADGUARD_UN}"
       - "homepage.widget.password=${ADGUARD_PW}"
       #autokuma
+      - "kuma.Infrastructure.group.name=Infrastructure"
       - "kuma.${APPNAME}.docker.name=${APPNAME}"
       - "kuma.${APPNAME}.docker.parent_name=Infrastructure"
+      #- "kuma.${APPNAME}.docker.notification_names=ntfy"
     volumes:
       - adguard-work:/opt/adguardhome/work
       - ./configdir:/opt/adguardhome/conf
