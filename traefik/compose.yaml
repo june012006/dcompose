@@ -108,7 +108,7 @@ services:
     container_name: crowdsec
     environment:
       PGID: "1000"
-      DOCKER_HOST: tcp://socketproxy-traefik:2375
+      DOCKER_HOST: tcp://socketproxy-main:2375
       COLLECTIONS: "crowdsecurity/traefik crowdsecurity/home-assistant crowdsecurity/http-cve crowdsecurity/whitelist-good-actors crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/appsec-crs"
       TZ: America/Chicago
       CUSTOM_HOSTNAME: CrowdSecDMZ
@@ -124,7 +124,7 @@ services:
       - "homepage.widget.username=${CROWDSEC_UN}"
       - "homepage.widget.password=${CROWDSEC_PW}"
     networks:
-      - backend
+      - socketproxy
     volumes:
       - crowdsec-data:/var/lib/crowdsec/data
       - crowdsec-config:/etc/crowdsec
