@@ -92,53 +92,53 @@ services:
       timeout: 3s
     volumes:
       - redis:/data
-  proxydmz-socketproxy:
-    container_name: socketproxy-traefik
-    image: lscr.io/linuxserver/socket-proxy:${socketproxyversion}
-    read_only: true
-    tmpfs:
-      - /run
-    networks:
-      - backend
-    ports:
-      - 2375:2375
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      - LOG_LEVEL=notice # debug,info,notice,warning,err,crit,alert,emerg (default=info)
-      ## Variables match the URL prefix (i.e. AUTH blocks access to /auth/* parts of the API, etc.).
-      # 0 to revoke access.
-      # 1 to grant access.
-      ## Granted by Default
-      - EVENTS=1
-      - PING=1
-      - VERSION=1
-      ## Revoked by Default
-      # Security critical
-      - AUTH=0
-      - SECRETS=0
-      - POST=0 # Watchtower
-      # Not always needed
-      - BUILD=0
-      - COMMIT=0
-      - CONFIGS=0
-      - ALLOW_START=0
-      - ALLOW_STOP=0
-      - ALLOW_RESTARTS=0
-      - CONTAINERS=1 # Traefik, portainer, netdata etc.
-      - DISTRIBUTION=0
-      - EXEC=0
-      - IMAGES=0 # Portainer
-      - INFO=1 # Portainer
-      - NETWORKS=0 # Portainer
-      - NODES=0
-      - PLUGINS=0
-      - SERVICES=1 # Portainer
-      - SESSION=0
-      - SWARM=0
-      - SYSTEM=1
-      - TASKS=0 # Portainer
-      - VOLUMES=0 # Portainer
+  # proxydmz-socketproxy:
+  #   container_name: socketproxy-traefik
+  #   image: lscr.io/linuxserver/socket-proxy:${socketproxyversion}
+  #   read_only: true
+  #   tmpfs:
+  #     - /run
+  #   networks:
+  #     - backend
+  #   ports:
+  #     - 2375:2375
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   environment:
+  #     - LOG_LEVEL=notice # debug,info,notice,warning,err,crit,alert,emerg (default=info)
+  #     ## Variables match the URL prefix (i.e. AUTH blocks access to /auth/* parts of the API, etc.).
+  #     # 0 to revoke access.
+  #     # 1 to grant access.
+  #     ## Granted by Default
+  #     - EVENTS=1
+  #     - PING=1
+  #     - VERSION=1
+  #     ## Revoked by Default
+  #     # Security critical
+  #     - AUTH=0
+  #     - SECRETS=0
+  #     - POST=0 # Watchtower
+  #     # Not always needed
+  #     - BUILD=0
+  #     - COMMIT=0
+  #     - CONFIGS=0
+  #     - ALLOW_START=0
+  #     - ALLOW_STOP=0
+  #     - ALLOW_RESTARTS=0
+  #     - CONTAINERS=1 # Traefik, portainer, netdata etc.
+  #     - DISTRIBUTION=0
+  #     - EXEC=0
+  #     - IMAGES=0 # Portainer
+  #     - INFO=1 # Portainer
+  #     - NETWORKS=0 # Portainer
+  #     - NODES=0
+  #     - PLUGINS=0
+  #     - SERVICES=1 # Portainer
+  #     - SESSION=0
+  #     - SWARM=0
+  #     - SYSTEM=1
+  #     - TASKS=0 # Portainer
+  #     - VOLUMES=0 # Portainer
   crowdsec:
     image: crowdsecurity/crowdsec
     container_name: crowdsec
