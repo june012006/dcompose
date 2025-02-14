@@ -11,7 +11,5 @@ services:
     networks:
       - traefik_backend
 networks:
-  traefik_backend:
-    external: true
   socketproxy:
     external: true
