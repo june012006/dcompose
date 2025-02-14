@@ -8,11 +8,15 @@
 
 # my-docker:
 #   socket: /var/run/docker.sock
-pihole:
+dns-1:
   host: 192.168.128.3
+  port: 2375
+dns-2: 
+  host: 192.168.128.249
+  port: 2375
+nas:
+  host: 192.168.25.4
   port: 2375
 gpuworkstation:
   host: 192.168.25.7
   port: 2375
-localbox:
-  socket: /var/run/docker.sock
