@@ -7,10 +7,11 @@ services:
     environment:
       - "REDIS_ADDR=192.168.25.4:6379"
       - "BIND_IP=192.168.25.4"
-      - "DOCKER_HOST=tcp://socketproxy-traefik:2375"
+      - "DOCKER_HOST=tcp://socketproxy-main:2375"
     networks:
       - traefik_backend
 networks:
   traefik_backend:
     external: true
-    
+  socketproxy:
+    external: true
