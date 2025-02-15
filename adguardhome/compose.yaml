@@ -39,9 +39,9 @@ services:
       #autokuma
       - "kuma.Infrastructure.group.name=Infrastructure"
       - "kuma.${APPNAME}.docker.name=${APPNAME}"
-      - "kuma.${APPNAME}.docker.container_name=adguardhome"
+      - "kuma.${APPNAME}.docker.docker_container={{container_id}}"
       - "kuma.${APPNAME}.docker.parent_name=Infrastructure"
-      - "kuma.${APPNAME}.docker.docker_host_name: ${DOCK_HOST}"
+      - "kuma.${APPNAME}.docker.docker_host=1"
       - "kuma.${APPNAME}.docker.notification_names=ntfy"
     volumes:
       - adguard-work:/opt/adguardhome/work
