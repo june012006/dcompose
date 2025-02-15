@@ -116,7 +116,7 @@ user_rules:
   - '|traefik.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|portainer.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.5'
   - '|auth.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
-  - '|books.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
+  - '|books.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|pve.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.10'
   - '|code-server.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
   - '|headscale.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.5'
