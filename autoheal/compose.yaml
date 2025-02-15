@@ -1,0 +1,8 @@
+
+services:
+  autoheal:
+    image: willfarrell/autoheal
+    restart: always
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=autoheal
+      - DOCKER_HOST=${DOCKER_HOSTS}
