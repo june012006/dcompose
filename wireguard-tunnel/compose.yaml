@@ -23,7 +23,7 @@ services:
     labels:
       - autoheal=true
     healthcheck:
-      test: curl -k https://whoami.${FQDN} -v --resolve 'whoami.${FQDN}:443:10.1.10.1'
+      test: curl -k https://whoami.watermelononatoothpick.com -v --resolve 'whoami.watermelononatoothpick.com:443:10.1.10.1'
       interval: 30s
       timeout: 30s
       retries: 3
@@ -37,6 +37,8 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
+    # networks:
+    #   - proxy
 networks:
   proxy:
     external: true
