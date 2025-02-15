@@ -41,7 +41,7 @@ services:
       - "kuma.${APPNAME}.docker.name=${APPNAME}"
       - "kuma.${APPNAME}.docker.docker_container={{container_id}}"
       - "kuma.${APPNAME}.docker.parent_name=Infrastructure"
-      - "kuma.${APPNAME}.docker.docker_host=1"
+      - "kuma.${APPNAME}.docker.docker_host=${DOCK_HOST}"
       - "kuma.${APPNAME}.docker.notification_names=ntfy"
     volumes:
       - adguard-work:/opt/adguardhome/work
