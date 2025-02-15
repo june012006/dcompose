@@ -4,10 +4,12 @@ services:
   autokuma:
     image: ghcr.io/bigboot/autokuma:latest
     restart: unless-stopped
+    env_file:
+      .env
     environment:
-      AUTOKUMA__KUMA__URL: http://localhost:3001
-      AUTOKUMA__KUMA__USERNAME: [[UPTIME_UN]] 
-      AUTOKUMA__KUMA__PASSWORD: [[UPTIME_PW]]
+      AUTOKUMA__KUMA__URL: http://192.168.128.3:3001
+      AUTOKUMA__KUMA__USERNAME: ${UPTIME_UN}
+      AUTOKUMA__KUMA__PASSWORD: ${UPTIME_PW}
       # AUTOKUMA__KUMA__MFA_TOKEN: <token>
       # AUTOKUMA__KUMA__HEADERS: "<header1_key>=<header1_value>,<header2_key>=<header2_value>,..."
       # AUTOKUMA__KUMA__CALL_TIMEOUT: 5
@@ -23,7 +25,7 @@ services:
       #    {{container_name}}_http.http.url: https://{{@0}}:{{@1}}
       #    {{container_name}}_docker.docker.name: {{container_name}} Docker
       #    {{container_name}}_docker.docker.docker_container: {{container_name}}
-      AUTOKUMA__DOCKER__HOSTS: tcp://192.168.128.3;tcp://192.168.25.4;tcp://192.168.128.249
+      AUTOKUMA__DOCKER__HOSTS: tcp://192.168.128.3:2375;tcp://192.168.25.4:2375;tcp://192.168.128.249:2375
       # AUTOKUMA__DOCKER__LABEL_PREFIX: kuma
       
     volumes:
