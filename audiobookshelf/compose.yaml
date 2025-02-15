@@ -25,7 +25,7 @@ services:
       kop.bind.ip: ${APPIP}
       homepage.group: Media
       homepage.name: ${APPNAME}
-      homepage.icon: audiobookshelf.png"
+      homepage.icon: audiobookshelf.svg"
       homepage.href: https://${APPNAME}.${FQDN}/
       homepage.description: ${APPDESC}
       homepage.widget.type: audiobookshelf
