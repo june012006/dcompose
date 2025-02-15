@@ -1,0 +1,49 @@
+services:
+  audiobookshelf:
+    container_name: audiobookshelf-server
+    image: ghcr.io/advplyr/audiobookshelf:${IMAGE_TAG}
+#    ports:
+#      - 13378:80
+    volumes:
+      - /mnt/NStorage/Media/Books:/audiobooks
+      - /mnt/NStorage/Media/podcasts:/podcasts
+      - /mnt/fastnvm/komodo/volumes/audiobookshelf/config:/config
+      - /mnt/NStorage/Media/absmetadata:/metadata
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.books-rtr.entrypoints: "web"
+      traefik.http.routers.books-rtr.rule: "Host(`${APPNAME}.${FQDN}`)"
+      traefik.http.middlewares.books-https-redirect.redirectscheme.scheme: "https"
+      traefik.http.routers.books-secure.middlewares: "crowdsec-bouncer@docker"
+      traefik.http.routers.books-rtr.middlewares: "books-https-redirect"
+      traefik.http.routers.books-secure.entrypoints: "websecure"
+      traefik.http.routers.books-secure.rule: "Host(`${APPNAME}.${FQDN}`)"
+      traefik.http.routers.books-secure.tls: "true"
+      traefik.http.services.books-svc.loadbalancer.server.port: "80"
+      kop.bind.ip: ${APPIP}
+      homepage.group: Media
+      homepage.name: ${APPNAME}
+      homepage.icon: audiobookshelf.png"
+      homepage.href: https://${APPNAME}.${FQDN}/
+      homepage.description: ${APPDESC}
+      homepage.widget.type: audiobookshelf
+      homepage.widget.url: https://${APPNAME}.${FQDN}
+      homepage.widget.key: ${BOOK_KEY}
+      autoheal: "true"
+      kuma.Infrastructure.group.name: Media
+      kuma.${APPNAME}.docker.name: ${APPNAME}
+      kuma.${APPNAME}.docker.docker_container: {{container_id}}
+      kuma.${APPNAME}.docker.parent_name: Media
+      kuma.${APPNAME}.docker.docker_host: ${DOCK_HOST}
+      kuma.${APPNAME}.docker.notification_names: ntfy
+    networks:
+      - proxy
+    healthcheck:
+      test: curl -k https://books.watermelononatoothpick.com/healthcheck -v --connect-to 'books.watermelononatoothpick.com:443:traefik:443'
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+networks:
+  proxy:
+    external: true
