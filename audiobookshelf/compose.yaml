@@ -2,8 +2,8 @@ services:
   audiobookshelf:
     container_name: audiobookshelf-server
     image: ghcr.io/advplyr/audiobookshelf:${IMAGE_TAG}
-#    ports:
-#      - 13378:80
+    ports:
+      - 13378:80
     volumes:
       - /mnt/NStorage/Media/Books:/audiobooks
       - /mnt/NStorage/Media/podcasts:/podcasts
@@ -19,7 +19,7 @@ services:
       traefik.http.routers.books-secure.entrypoints: "websecure"
       traefik.http.routers.books-secure.rule: "Host(`${APPNAME}.${FQDN}`)"
       traefik.http.routers.books-secure.tls: "true"
-      traefik.http.services.books-svc.loadbalancer.server.port: "80"
+      traefik.http.services.books-svc.loadbalancer.server.port: "13378"
       kop.bind.ip: ${APPIP}
       homepage.group: Media
       homepage.name: ${APPNAME}
