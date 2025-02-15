@@ -9,6 +9,8 @@ services:
       - /mnt/NStorage/Media/podcasts:/podcasts
       - /mnt/fastnvm/komodo/volumes/audiobookshelf/config:/config
       - /mnt/NStorage/Media/absmetadata:/metadata
+    env_file:
+      .env
     labels:
       traefik.enable: "true"
       traefik.http.routers.books-rtr.entrypoints: "web"
