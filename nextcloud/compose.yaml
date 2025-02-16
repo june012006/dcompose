@@ -57,7 +57,8 @@ services:
     volumes:
       - redis:/var/lib/redis
   app:
-    image: nextcloud:29.0.4-fpm
+    image: nextcloud:${IMAGE_TAG}
+    #29.0.4-fpm
     restart: unless-stopped
     networks:
       - db_backend
@@ -84,7 +85,7 @@ services:
       - nextcloud-data:/var/www/html/data
       - nextcloud-www:/var/www/html
   cron:
-    image: nextcloud:29.0.4-fpm
+    image: nextcloud:${IMAGE_TAG}
     restart: always
     volumes:
       - nextcloud-www:/var/www/html
