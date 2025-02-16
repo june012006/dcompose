@@ -131,7 +131,7 @@ services:
       - kop.bind.ip=192.168.25.4
       - homepage.group=Cloud
       - homepage.name=nextcloud
-      - homepage.icon=nextcloud.svg"
+      - homepage.icon=https://github.com/homarr-labs/dashboard-icons/blob/main/svg/nextcloud.svg"
       - homepage.href=https://nextcloud.${FQDN}/
       - homepage.description=${APPDESC}
       - homepage.widget.type=nextcloud
