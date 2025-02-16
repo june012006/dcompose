@@ -109,6 +109,8 @@ services:
       - .env
     environment:
       - VIRTUAL_HOST=nextcloud.${FQDN}
+    ports:
+      - 8085:80
     labels:
       - traefik.enable=true
       - traefik.docker.network=proxy
@@ -116,7 +118,7 @@ services:
       - traefik.http.routers.nextcloud-rtr.tls.certresolver=letsencrypt
       - traefik.http.routers.nextcloud-rtr.rule=Host(`nextcloud.${FQDN}`)
       - traefik.http.routers.nextcloud-rtr.service=nextcloud
-      - traefik.http.services.nextcloud.loadbalancer.server.port=80
+      - traefik.http.services.nextcloud.loadbalancer.server.port=8085
       - traefik.http.middlewares.nextcloud.headers.customFrameOptionsValue=ALLOW-FROM https://${FQDN}
       - traefik.http.middlewares.nextcloud.headers.contentSecurityPolicy=frame-ancestors 'self' ${FQDN} *.${FQDN}
       - traefik.http.middlewares.nextcloud.headers.stsSeconds=155520011
@@ -126,6 +128,7 @@ services:
       - traefik.http.middlewares.nextcloud_redirect.redirectregex.permanent=true
       - traefik.http.middlewares.nextcloud_redirect.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav
       - traefik.http.middlewares.nextcloud_redirect.redirectregex.replacement=https://$${1}/remote.php/dav/
+      - kop.bind.ip=192.168.25.4
       - homepage.group=Cloud
       - homepage.name=nextcloud
       - homepage.icon=nextcloud.svg"
