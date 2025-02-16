@@ -1,0 +1,142 @@
+
+version: '3.1'
+
+volumes:
+  # nextcloud-www:
+  #   driver_opts:
+  #     type: "nfs"
+  #     o: "addr=192.168.25.4,vers=4,nolock,soft,rw"
+  #     device: ":/mnt/NStorage/nextcloud"
+  nextcloud-www: #excluding data
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /mnt/fastnvm/komodo/volumes/nextcloud/www
+  nextcloud-db:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /mnt/fastnvm/komodo/volumes/nextcloud/db
+  nextcloud-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /mnt/NStorage/komodo/volumes/nextcloud/data
+  redis:
+    driver: local
+networks:
+  proxy:
+    external: true
+  db_backend:
+    external: true
+services:
+  nextcloud-db:
+    restart: unless-stopped
+    image: postgres:16.3
+    networks:
+      - db_backend
+    env_file:
+      - .env
+    environment:
+    - POSTGRES_USER=${PG_USER:-nextcloud}
+    - POSTGRES_PASSWORD=${PG_PASS:?database password required}
+    - POSTGRES_DB=${PG_DB:-nextcloud}
+    # env_file:
+    #   - stack.env
+    volumes:
+    - nextcloud-db:/var/lib/postgresql/data
+  redis:
+    container_name: nextcloud_redis
+    image: redis:alpine3.20
+    restart: unless-stopped
+    networks:
+      - db_backend
+    volumes:
+      - redis:/var/lib/redis
+  app:
+    image: nextcloud:29.0.4-fpm
+    restart: unless-stopped
+    networks:
+      - db_backend
+    depends_on:
+      - redis
+      - nextcloud-db
+    dns: 
+      - 192.168.128.3
+
+    environment:
+      - POSTGRES_DB=${PG_DB:-nextcloud}
+      - POSTGRES_USER=${PG_USER:-nextcloud}
+      - POSTGRES_PASSWORD=${PG_PASS:?database password required}
+      - POSTGRES_HOST=nextcloud-db
+      - REDIS_HOST=nextcloud_redis
+      - NEXTCLOUD_TRUSTED_DOMAINS=127.0.0.1,nextcloud.${FQDN}
+      - TRUSTED_PROXIES=172.23.0.0/16
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITECLIURL=https://nextcloud.${FQDN}
+      - OVERWRITEHOST=nextcloud.${FQDN}
+    env_file:
+      - .env
+    volumes:      
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-www:/var/www/html
+  cron:
+    image: nextcloud:29.0.4-fpm
+    restart: always
+    volumes:
+      - nextcloud-www:/var/www/html
+      - nextcloud-data:/var/www/html/data
+    entrypoint: /cron.sh
+    env_file:
+      - .env
+    depends_on:
+      - nextcloud-db
+      - redis
+    networks:
+      - db_backend
+    dns: 
+      - 192.168.128.3
+  web:
+    build: ./web/
+    restart: unless-stopped
+    volumes: 
+      - nextcloud-www:/var/www/html
+      - ./web/nginx.conf:/etc/nginx/nginx.conf
+    env_file:
+      - .env
+    environment:
+      - VIRTUAL_HOST=nextcloud.${FQDN}
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.nextcloud-rtr.middlewares=nextcloud,nextcloud_redirect,crowdsec-bouncer@docker
+      - traefik.http.routers.nextcloud-rtr.tls.certresolver=letsencrypt
+      - traefik.http.routers.nextcloud-rtr.rule=Host(`nextcloud.${FQDN}`)
+      - traefik.http.routers.nextcloud-rtr.service=nextcloud
+      - traefik.http.services.nextcloud.loadbalancer.server.port=80
+      - traefik.http.middlewares.nextcloud.headers.customFrameOptionsValue=ALLOW-FROM https://${FQDN}
+      - traefik.http.middlewares.nextcloud.headers.contentSecurityPolicy=frame-ancestors 'self' ${FQDN} *.${FQDN}
+      - traefik.http.middlewares.nextcloud.headers.stsSeconds=155520011
+      - traefik.http.middlewares.nextcloud.headers.stsIncludeSubdomains=true
+      - traefik.http.middlewares.nextcloud.headers.stsPreload=true
+      - traefik.http.middlewares.nextcloud.headers.customFrameOptionsValue=SAMEORIGIN
+      - traefik.http.middlewares.nextcloud_redirect.redirectregex.permanent=true
+      - traefik.http.middlewares.nextcloud_redirect.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav
+      - traefik.http.middlewares.nextcloud_redirect.redirectregex.replacement=https://$${1}/remote.php/dav/
+      - homepage.group=Cloud
+      - homepage.name=nextcloud
+      - homepage.icon=nextcloud.svg"
+      - homepage.href=https://nextcloud.${FQDN}/
+      - homepage.description=${APPDESC}
+      - homepage.widget.type=nextcloud
+      - homepage.widget.url=https://nextcloud.${FQDN}
+      - homepage.widget.key=${BOOK_KEY}
+    networks:
+      - proxy
+      - db_backend
+    dns: 
+      - 192.168.128.3
+      - 192.168.128.249
