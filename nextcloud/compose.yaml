@@ -74,7 +74,7 @@ services:
       - POSTGRES_HOST=nextcloud-db
       - REDIS_HOST=nextcloud_redis
       - NEXTCLOUD_TRUSTED_DOMAINS=127.0.0.1,nextcloud.${FQDN}
-      - TRUSTED_PROXIES=172.23.0.0/16
+      - TRUSTED_PROXIES=172.0.0.0/8 192.168.0.0/24
       - OVERWRITEPROTOCOL=https
       - OVERWRITECLIURL=https://nextcloud.${FQDN}
       - OVERWRITEHOST=nextcloud.${FQDN}
@@ -136,7 +136,7 @@ services:
       - homepage.description=${APPDESC}
       - homepage.widget.type=nextcloud
       - homepage.widget.url=https://nextcloud.${FQDN}
-      - homepage.widget.key=${BOOK_KEY}
+      - homepage.widget.key=${NEXTCLOUD_KEY}
     networks:
       - proxy
       - db_backend
