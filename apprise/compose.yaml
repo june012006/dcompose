@@ -6,11 +6,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.apprise.entrypoints=web"
-      - "traefik.http.routers.apprise.rule=Host(`${apprise_FQDN}`)"
+      - "traefik.http.routers.apprise.rule=Host(`${apprise.${FQDN}`)"
       - "traefik.http.middlewares.apprise-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.apprise.middlewares=apprise-https-redirect"
       - "traefik.http.routers.apprise-secure.entrypoints=websecure"
-      - "traefik.http.routers.apprise-secure.rule=Host(`apprise_FQDN`)"
+      - "traefik.http.routers.apprise-secure.rule=Host(`apprise.${FQDN}`)"
       - "traefik.http.routers.apprise-secure.tls=true"
       - "traefik.http.routers.apprise-secure.service=apprise"
       - "traefik.http.services.apprise.loadbalancer.server.port=8000"
