@@ -1,0 +1,30 @@
+---
+services:
+  apprise-api:
+    image: lscr.io/linuxserver/apprise-api:latest
+    container_name: apprise-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apprise.entrypoints=web"
+      - "traefik.http.routers.apprise.rule=Host(`${apprise_FQDN}`)"
+      - "traefik.http.middlewares.apprise-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.apprise.middlewares=apprise-https-redirect"
+      - "traefik.http.routers.apprise-secure.entrypoints=websecure"
+      - "traefik.http.routers.apprise-secure.rule=Host(`apprise_FQDN`)"
+      - "traefik.http.routers.apprise-secure.tls=true"
+      - "traefik.http.routers.apprise-secure.service=apprise"
+      - "traefik.http.services.apprise.loadbalancer.server.port=8000"
+      - "traefik.docker.network=proxy"
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - APPRISE_ATTACH_SIZE=10240 #optional
+    volumes:
+      - /etc/komodo/volumes/apprise-api/config:/config
+      - /etc/komodo/volumes/apprise-api/attachments:/attachments #optional
+    ports:
+      - 8000:8000
+    restart: unless-stopped
