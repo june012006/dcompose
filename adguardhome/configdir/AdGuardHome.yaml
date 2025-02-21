@@ -148,6 +148,7 @@ user_rules:
   - '|openbao.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
   - '|uptime.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|apprise.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
+  - '|apprise.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
 dhcp:
   enabled: false
   interface_name: ""
