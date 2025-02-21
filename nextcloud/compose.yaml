@@ -105,6 +105,7 @@ services:
     restart: unless-stopped
     volumes: 
       - nextcloud-www:/var/www/html
+      - nextcloud-data:/var/www/html/data #added to hopefully fix custom_apps blank page issue
       - ./web/nginx.conf:/etc/nginx/nginx.conf
     env_file:
       - .env
