@@ -32,8 +32,13 @@ services:
           - "traefik.http.routers.joplin-secure.service=joplin"
           - "traefik.http.services.joplin.loadbalancer.server.port=22300"
           - "kop.bind.ip=192.168.25.4"
+        networks:
+          - db_backend
 
 
             
 volumes:
   joplindb:
+networks:
+  db_backend:
+    external: true
