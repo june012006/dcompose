@@ -138,7 +138,7 @@ user_rules:
   - '|whoami.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|ntfy.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|homepage.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
-  - '|jarvis.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.4'
+  - '|jarvis.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|homeassistant.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|immich.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|komodo.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
