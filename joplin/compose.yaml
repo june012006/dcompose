@@ -20,6 +20,18 @@ services:
         restart: unless-stopped
         env_file:
           - .env
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.joplin.entrypoints=web"
+          - "traefik.http.routers.joplin.rule=Host(`joplin.${FQDN}`)"
+          - "traefik.http.middlewares.joplin-https-redirect.redirectscheme.scheme=https"
+          - "traefik.http.routers.joplin.middlewares=joplin-https-redirect"
+          - "traefik.http.routers.joplin-secure.entrypoints=websecure"
+          - "traefik.http.routers.joplin-secure.rule=Host(`joplin.${FQDN}`)"
+          - "traefik.http.routers.joplin-secure.tls=true"
+          - "traefik.http.routers.joplin-secure.service=joplin"
+          - "traefik.http.services.joplin.loadbalancer.server.port=22300"
+          - "kop.bind.ip=192.168.25.4"
 
 
             
