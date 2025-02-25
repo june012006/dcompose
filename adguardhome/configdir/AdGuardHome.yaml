@@ -172,7 +172,8 @@ filtering:
   blocked_services:
     schedule:
       time_zone: UTC
-    ids: []
+    ids:
+      - tinder
   protection_disabled_until: null
   safe_search:
     enabled: false
@@ -203,7 +204,123 @@ clients:
     rdns: true
     dhcp: true
     hosts: true
-  persistent: []
+  persistent:
+    - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: James-Main-LAN
+      ids:
+        - 192.168.128.10
+      tags:
+        - os_windows
+        - user_admin
+      upstreams: []
+      uid: 01953eae-c250-714b-8710-084dd00d3e53
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: James-Main-Wifi
+      ids:
+        - 192.168.128.11
+      tags:
+        - os_windows
+        - user_admin
+      upstreams: []
+      uid: 01953eb0-6423-7807-a60c-878e9a1055c6
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: James-Phone
+      ids:
+        - 192.168.128.12
+      tags:
+        - os_android
+        - user_admin
+      upstreams: []
+      uid: 01953eb1-5f4f-7941-8596-0d195c2852c8
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: Micah's XBOX
+      ids:
+        - 192.168.128.145
+      tags:
+        - device_gameconsole
+        - user_child
+      upstreams: []
+      uid: 01953eb2-6b3e-7039-8dcc-912bd75bca3f
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: true
+      filtering_enabled: false
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
 log:
   file: ""
   max_backups: 0
