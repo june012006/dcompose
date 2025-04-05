@@ -7,6 +7,14 @@ services:
       - config:/config
       - cache:/cache
       - media:/media
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     network_mode: 'host'
     # networks:
     #   - proxy
@@ -19,6 +27,7 @@ services:
     #   # VAAPI Devices
        - /dev/dri/renderD129:/dev/dri/renderD129
        - /dev/dri/card0:/dev/dri/card0
+      
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jf.entrypoints=web"
