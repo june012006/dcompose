@@ -134,7 +134,7 @@ user_rules:
   - '|paperless.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.5'
   - '@@||statsigapi.net^$client=''192.168.128.145'''
   - '@@||at.atwola.com^$client=''192.168.128.145'''
-  - '|jf.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.5'
+  - '|jf.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|whoami.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|ntfy.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|homepage.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
