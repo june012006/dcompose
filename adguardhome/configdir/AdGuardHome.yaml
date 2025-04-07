@@ -23,7 +23,8 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    - https://dns10.quad9.net/dns-query
+    # - https://dns10.quad9.net/dns-query
+    - https://family.adguard-dns.com/dns-query
   upstream_dns_file: ""
   bootstrap_dns:
     - 9.9.9.10
@@ -293,6 +294,63 @@ clients:
       ignore_querylog: false
       ignore_statistics: false
     - safe_search:
+        enabled: true
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: Josephs-echo
+      ids:
+        - 192.168.107.112
+      tags:
+        - os_other
+        - user_child
+      upstreams: []
+      uid: 019610cc-ee7c-74c8-a9c0-4ee4bac17a62
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: true
+      safebrowsing_enabled: true
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: Maxines_iphone
+      ids:
+        - 192.168.128.126
+      tags:
+        - user_regular
+      upstreams: []
+      uid: 019610ca-0c01-7185-a6d0-3808f969428d
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: true
+      filtering_enabled: false
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
         enabled: false
         bing: true
         duckduckgo: true
@@ -318,6 +376,179 @@ clients:
       filtering_enabled: false
       parental_enabled: false
       safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: Router
+      ids:
+        - 192.168.128.1
+      tags:
+        - device_other
+        - os_other
+      upstreams: []
+      uid: 019610d8-82e2-7798-b72c-ba637a3ba846
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: true
+      filtering_enabled: false
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: true
+    - safe_search:
+        enabled: true
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: kids_pc
+      ids:
+        - 192.168.128.16
+      tags:
+        - os_windows
+        - user_child
+      upstreams: []
+      uid: 019610c8-fe95-7774-8c6c-0245fb158e67
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: true
+      safebrowsing_enabled: true
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: true
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: kitchen_speaker
+      ids:
+        - 192.168.107.35
+      tags:
+        - device_other
+      upstreams: []
+      uid: 019610ce-c046-7921-a605-555e4098c4f2
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: true
+      safebrowsing_enabled: true
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: true
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: livingroom-tv
+      ids:
+        - 192.168.107.254
+      tags:
+        - device_tv
+      upstreams: []
+      uid: 019610c6-4f78-7848-bb8e-e61cd736de02
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: true
+      safebrowsing_enabled: true
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: master-bedroom-TV
+      ids:
+        - 192.168.107.15
+      tags:
+        - device_tv
+      upstreams:
+        - https://dns10.quad9.net/dns-query
+      uid: 019610c5-43e4-7acf-811e-2fe7bee29441
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: false
+      parental_enabled: true
+      safebrowsing_enabled: true
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: true
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: master-bedroom-speaker
+      ids:
+        - 192.168.107.70
+      tags:
+        - device_other
+        - os_other
+        - user_regular
+      upstreams: []
+      uid: 019610cf-695d-7a5a-a7bf-dcc620001bd7
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: true
+      safebrowsing_enabled: true
       use_global_blocked_services: true
       ignore_querylog: false
       ignore_statistics: false
