@@ -113,7 +113,7 @@ filters:
     id: 2
   - enabled: true
     url: https://v.firebog.net/hosts/Prigent-Adult.txt
-    name: List 1725222278
+    name: Prigent-Adult
     id: 1725222278
 whitelist_filters: []
 user_rules:
