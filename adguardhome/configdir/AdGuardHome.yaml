@@ -89,14 +89,14 @@ tls:
 querylog:
   dir_path: ""
   ignored: []
-  interval: 2160h
+  interval: 168h
   size_memory: 1000
   enabled: true
   file_enabled: true
 statistics:
   dir_path: ""
   ignored: []
-  interval: 24h
+  interval: 168h
   enabled: true
 filters:
   - enabled: true
@@ -149,6 +149,7 @@ user_rules:
   - '|uptime.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|apprise.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|joplin.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
+  - '@@||*^$client=''master-bedroom-TV'''
 dhcp:
   enabled: false
   interface_name: ""
@@ -171,12 +172,12 @@ filtering:
   blocking_ipv6: ""
   blocked_services:
     schedule:
-      time_zone: UTC
+      time_zone: America/Chicago
     ids:
       - tinder
   protection_disabled_until: null
   safe_search:
-    enabled: false
+    enabled: true
     bing: true
     duckduckgo: true
     google: true
@@ -194,8 +195,8 @@ filtering:
   filters_update_interval: 24
   blocked_response_ttl: 10
   filtering_enabled: true
-  parental_enabled: false
-  safebrowsing_enabled: false
+  parental_enabled: true
+  safebrowsing_enabled: true
   protection_enabled: true
 clients:
   runtime_sources:
@@ -320,7 +321,7 @@ clients:
       ignore_querylog: false
       ignore_statistics: false
     - safe_search:
-        enabled: true
+        enabled: false
         bing: true
         duckduckgo: true
         google: true
