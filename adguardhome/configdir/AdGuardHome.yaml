@@ -88,14 +88,18 @@ tls:
   strict_sni_check: false
 querylog:
   dir_path: ""
-  ignored: []
+  ignored: 
+   - '*.watermelononatoothpick.com'
+   - 'zabbix.postgres'
   interval: 168h
   size_memory: 1000
   enabled: true
   file_enabled: true
 statistics:
   dir_path: ""
-  ignored: []
+  ignored: 
+   - '*.watermelononatoothpick.com'
+   - 'zabbix.postgres'
   interval: 168h
   enabled: true
 filters:
