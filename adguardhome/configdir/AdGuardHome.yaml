@@ -23,7 +23,6 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    # - https://dns10.quad9.net/dns-query
     - https://family.adguard-dns.com/dns-query
   upstream_dns_file: ""
   bootstrap_dns:
@@ -294,6 +293,33 @@ clients:
       ignore_querylog: false
       ignore_statistics: false
     - safe_search:
+        enabled: false
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: James_tablet
+      ids:
+        - 192.168.128.251
+      tags: []
+      upstreams: []
+      uid: 019610ed-e7e5-7dc5-a47b-825cdb57aede
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: true
+      filtering_enabled: false
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
         enabled: true
         bing: true
         duckduckgo: true
@@ -380,7 +406,37 @@ clients:
       ignore_querylog: false
       ignore_statistics: false
     - safe_search:
-        enabled: false
+        enabled: true
+        bing: true
+        duckduckgo: true
+        google: true
+        pixabay: true
+        yandex: true
+        youtube: true
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: Micahs_IPhone
+      ids:
+        - 192.168.128.155
+      tags:
+        - device_phone
+        - os_ios
+        - user_child
+      upstreams: []
+      uid: 019610ed-3060-737d-9dbc-db5978bc5d73
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: true
+      safebrowsing_enabled: true
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+    - safe_search:
+        enabled: true
         bing: true
         duckduckgo: true
         google: true
