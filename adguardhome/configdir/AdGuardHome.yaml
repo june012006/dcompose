@@ -91,6 +91,8 @@ querylog:
   ignored: 
    - '*.watermelononatoothpick.com'
    - 'zabbix.postgres'
+   - 'host.docker.internal'
+   - 'host.containers.internal'
   interval: 168h
   size_memory: 1000
   enabled: true
@@ -100,6 +102,9 @@ statistics:
   ignored: 
    - '*.watermelononatoothpick.com'
    - 'zabbix.postgres'
+   - 'host.docker.internal'
+   - 'host.containers.internal'
+
   interval: 168h
   enabled: true
 filters:
@@ -115,6 +120,22 @@ filters:
     url: https://v.firebog.net/hosts/Prigent-Adult.txt
     name: Prigent-Adult
     id: 1725222278
+  - enabled: true
+    url: https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/doh-vpn-proxy-bypass.txt
+    name: VPN filter
+    id: 3
+  - enabled: true
+    url: https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/fake.txt
+    name: Fake site block
+    id: 4
+  - enabled: true
+    url: https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/windows
+    name: Windows telemetry block
+    id: 5
+  - enabled: true
+    url: https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/apple
+    name: Apple telemetry block
+    id: 6
 whitelist_filters: []
 user_rules:
   - '|traefik.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
