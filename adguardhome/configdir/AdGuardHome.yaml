@@ -488,8 +488,8 @@ clients:
       filtering_enabled: false
       parental_enabled: false
       safebrowsing_enabled: false
-      use_global_blocked_services: true
-      ignore_querylog: false
+      use_global_blocked_services: false
+      ignore_querylog: true
       ignore_statistics: false
     - safe_search:
         enabled: false
