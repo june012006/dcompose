@@ -462,13 +462,13 @@ clients:
       ignore_querylog: false
       ignore_statistics: false
     - safe_search:
-        enabled: true
-        bing: true
-        duckduckgo: true
-        google: true
-        pixabay: true
-        yandex: true
-        youtube: true
+        enabled: false
+        bing: false
+        duckduckgo: false
+        google: false
+        pixabay: false
+        yandex: false
+        youtube: false
       blocked_services:
         schedule:
           time_zone: UTC
