@@ -37,6 +37,8 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     logging:
       driver: ${LOGGING_DRIVER:-local}
+    volumes:
+      - ./config/loki.yaml:/etc/loki/local-config.yaml
     networks:
       - default
     ports:
