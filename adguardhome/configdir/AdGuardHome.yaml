@@ -666,6 +666,36 @@ clients:
       use_global_blocked_services: true
       ignore_querylog: false
       ignore_statistics: false
+    - safe_search:
+        enabled: false
+        bing: false
+        duckduckgo: false
+        google: false
+        pixabay: false
+        yandex: false
+        youtube: false
+      blocked_services:
+        schedule:
+          time_zone: UTC
+        ids: []
+      name: Management network
+      ids:
+        - 192.168.25.0/24
+      tags:
+        - user_admin
+      upstreams:
+        - https://dns10.quad9.net/dns-query
+      uid: 0196d99f-0501-7263-abb5-8d9dd281e009
+      upstreams_cache_size: 0
+      upstreams_cache_enabled: false
+      use_global_settings: false
+      filtering_enabled: true
+      parental_enabled: false
+      safebrowsing_enabled: false
+      use_global_blocked_services: true
+      ignore_querylog: false
+      ignore_statistics: false
+
 log:
   file: ""
   max_backups: 0
