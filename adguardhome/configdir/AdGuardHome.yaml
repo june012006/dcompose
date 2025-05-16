@@ -233,12 +233,12 @@ clients:
   persistent:
     - safe_search:
         enabled: false
-        bing: true
-        duckduckgo: true
-        google: true
-        pixabay: true
-        yandex: true
-        youtube: true
+        bing: false
+        duckduckgo: false
+        google: false
+        pixabay: false
+        yandex: false
+        youtube: false
       blocked_services:
         schedule:
           time_zone: UTC
@@ -249,7 +249,8 @@ clients:
       tags:
         - os_windows
         - user_admin
-      upstreams: []
+      upstreams:
+        - https://dns10.quad9.net/dns-query
       uid: 01953eae-c250-714b-8710-084dd00d3e53
       upstreams_cache_size: 0
       upstreams_cache_enabled: false
@@ -262,12 +263,12 @@ clients:
       ignore_statistics: false
     - safe_search:
         enabled: false
-        bing: true
-        duckduckgo: true
-        google: true
-        pixabay: true
-        yandex: true
-        youtube: true
+        bing: false
+        duckduckgo: false
+        google: false
+        pixabay: false
+        yandex: false
+        youtube: false
       blocked_services:
         schedule:
           time_zone: UTC
@@ -278,7 +279,8 @@ clients:
       tags:
         - os_windows
         - user_admin
-      upstreams: []
+      upstreams:
+        - https://dns10.quad9.net/dns-query
       uid: 01953eb0-6423-7807-a60c-878e9a1055c6
       upstreams_cache_size: 0
       upstreams_cache_enabled: false
@@ -346,7 +348,7 @@ clients:
       ignore_querylog: false
       ignore_statistics: false
     - safe_search:
-        enabled: false
+        enabled: true
         bing: true
         duckduckgo: true
         google: true
@@ -376,12 +378,12 @@ clients:
       ignore_statistics: false
     - safe_search:
         enabled: false
-        bing: true
-        duckduckgo: true
-        google: true
-        pixabay: true
-        yandex: true
-        youtube: true
+        bing: false
+        duckduckgo: false
+        google: false
+        pixabay: false
+        yandex: false
+        youtube: false
       blocked_services:
         schedule:
           time_zone: UTC
