@@ -1,6 +1,6 @@
 services:
   adguardhome:
-    image: adguard/adguardhome:v0.107.51
+    image: adguard/adguardhome:${IMAGE_TAG}
     container_name: adguardhome
     ports:
 #      - 53:53/tcp
