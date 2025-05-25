@@ -1,0 +1,49 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:${HASS_IMAGE_TAG}" #2025.5.3
+    volumes:
+      - /opt/homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+  nodered:
+    container_name: nodered
+    image: nodered/node-red:${NODERED_IMAGE_TAG} #3.1.15
+    environment:
+      - TZ=America/Chicago
+    ports:
+      - 1880:1880
+    volumes:
+      - /opt/nodered:/data
+    depends_on:
+      - homeassistant
+      - mosquitto
+    restart: unless-stopped
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:{MQTT_IMAGE_TAG} #2.0.21
+    environment:
+      - TZ=America/Chicago
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - "./mosquitto/config:/mosquitto/config"
+      - "./mosquitto/data:/mosquitto/data"
+      - "./mosquitto/log:/mosquitto/log"
+    restart: unless-stopped
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome:${ESPHOME_IMAGE_TAG} # 2025.5.0
+    volumes:
+      - /opt/esphome/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    privileged: true
+    network_mode: host
+    environment:
+      - USERNAME=${ESP_UN}
+      - PASSWORD=${ESP_PW}
