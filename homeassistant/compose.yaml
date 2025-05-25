@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
   mosquitto:
     container_name: mosquitto
-    image: eclipse-mosquitto:{MQTT_IMAGE_TAG} #2.0.21
+    image: eclipse-mosquitto:${MQTT_IMAGE_TAG} #2.0.21
     environment:
       - TZ=America/Chicago
     ports:
