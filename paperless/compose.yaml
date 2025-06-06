@@ -77,9 +77,9 @@ services:
       - "traefik.http.routers.paperless-secure.rule=Host(`paperless.watermelononatoothpick.com`)"
       - "traefik.http.routers.paperless-secure.tls=true"
       - "traefik.http.routers.paperless-secure.service=paperless"
-      - "traefik.http.services.paperless.loadbalancer.server.port=8000"
+      - "traefik.http.services.paperless.loadbalancer.server.port=8010"
       - "traefik.docker.network=proxy"
-      - "kop.bind.ip=192.168.128.3"
+      - "kop.bind.ip=192.168.25.4"
     environment:
       PAPERLESS_URL: https://paperless.watermelononatoothpick.com
       PAPERLESS_REDIS: redis://broker:6379
