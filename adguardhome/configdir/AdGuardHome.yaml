@@ -156,7 +156,7 @@ user_rules:
   - '|nextcloud.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '|wiki.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.5'
   - '|netbird.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.5'
-  - '|paperless.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.25.5'
+  - '|paperless.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
   - '@@||statsigapi.net^$client=''192.168.128.145'''
   - '@@||at.atwola.com^$client=''192.168.128.145'''
   - '|jf.watermelononatoothpick.com^$dnsrewrite=NOERROR;A;192.168.128.3'
